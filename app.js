@@ -1,5 +1,5 @@
 'use strict';
-//Ray and I worked together on this code.
+//Ray Johnson and I worked together on this code together.
 // use global variables:
 var results = document.getElementById('results');//declare the variable results to find results in html
 var totalClicks = 0;
