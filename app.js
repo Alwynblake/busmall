@@ -12,7 +12,7 @@ var allProducts = [];
 //and to keep track of the times the image is displayed, and then instantiate the new objects->
 //Constructor function for 'Product' objects:
 function Product(name, imgPath, altText) {
-  //(image a property on the constructor function(product))
+  //(image a property on the constructor function(Product))
   this.name = name;
   this.imgPath = imgPath;
   this.altText = altText;
@@ -51,7 +51,7 @@ function randomImage() {
   var secondRandom = Math.floor(Math.random() * allProducts.length);
   var thirdRandom = Math.floor(Math.random() * allProducts.length);
 
-  //grab a random image from the array; access it at the index 'randomFirst' on the array:
+  //grab a random image from the array; access it at the index 'firstRandom' on the array:
   firstImg.src = allProducts[firstRandom].imgPath;
   secondImg.src = allProducts[secondRandom].imgPath;
   thirdImg.src = allProducts[thirdRandom].imgPath;
@@ -59,7 +59,7 @@ function randomImage() {
   //everytime a random image is called 'totaClicks' increments
   totalClicks++;
   console.log(totalClicks);
-  //add an if statement to stop running at 25 clicks. stop the event listener from functioning
+  //add an if statement to stop running at 25 clicks (stop the event listener from functioning).
   if (totalClicks === 25) {
     firstImg.removeEventListener('click', randomImage);
     secondImg.removeEventListener('click', randomImage);
@@ -71,7 +71,7 @@ randomImage();
 //generate a string for every object
 function displayResults() {
   //use a for loop to iterate through the array:
-  for (var i = 0; i < allProducts.length; i++) { //start at 0. is 0 < 20. if yes, increment it by 1 
+  for (var i = 0; i < allProducts.length; i++) { //start at 0. is 0 < 20? if yes, increment it by 1 
     var listEl = document.createElement('li');
     listEl.textContent = allProducts[i].votes + ' votes for the ' + allProducts[i].name + ' and ' + allProducts[i].views + ' views ';
     results.appendChild(listEl);
