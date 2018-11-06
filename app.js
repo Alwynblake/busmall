@@ -1,27 +1,27 @@
 'use strict';
 //Ray Johnson and I worked together on this code with a tutor.
-// use global variables:
-var results = document.getElementById('results');//declare the variable results to find results in html
+//use global variables:
 var totalClicks = 0;
-
 var firstImg = document.getElementById('first');
 var secondImg = document.getElementById('second');
 var thirdImg = document.getElementById('third');
+var results = document.getElementById('results'); //declare the variable results to find results in html
+
 //set the foundation to enable a constructor to setup an object for every image downloaded
-//and to keep track of the times the image is displayed, and then instantiate the new objects:
 var allProducts = [];
+//and to keep track of the times the image is displayed, and then instantiate the new objects->
 //Constructor function for 'Product' objects:
 function Product(name, imgPath, altText) {
   //(image a property on the constructor function(product))
   this.name = name;
   this.imgPath = imgPath;
   this.altText = altText;
-  this.views = 0; //the other properties havent been seen.set them to 0
+  this.views = 0; //the other properties havent been seen. set them to 0
   this.votes = 0; //everytime you click on an object increase this value
   allProducts.push(this); //push this whenever the object is instantiated
 };
-//new product instantiates (to represent or be an example of something) a new object
 //we need a "blueprint" for creating many objects of the same "type".
+//new Product instantiates (to represent or be an example of something) a new object
 //The way to create an "object type", is to use an object constructor function:
 new Product('bag', './assets/bag.jpg');
 new Product('banana', './assets/banana.jpg');
