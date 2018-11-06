@@ -1,4 +1,7 @@
 'use strict';
+// use global variables
+var totalClicks = 0;
+
 var firstImg = document.getElementById('first');
 var secondImg = document.getElementById('second');
 var thirdImg = document.getElementById('third');
@@ -18,13 +21,13 @@ function Product(name, imgPath, altText) {
 }
 //new product instantiates a new object
 new Product('bag', './assets/bag.jpg');
-new Product('banana', './asse/banana.jpg');
+new Product('banana', './assets/banana.jpg');
 new Product('bathroom', './assets/bathroom.jpg');
 new Product('boots', './assets/boots.jpg');
 new Product('breakfast', './assets/breakfast.jpg');
 new Product('bubblegum', './assets/bubblegum.jpg');
 new Product('chair', './assets/chair.jpg');
-new Product('cthulhu', './assets/cthulthu.jpg');
+new Product('cthulhu', './assets/cthulhu.jpg');
 new Product('dog-duck', './assets/dog-duck.jpg');
 new Product('dragon', './assets/dragon.jpg');
 new Product('pen', './assets/pen.jpg');
@@ -33,9 +36,26 @@ console.log(allProducts);
 //create a random image function
 function randomImage() {
   var firstRandom = Math.floor(Math.random() * allProducts.length);
-  console.log(firstRandom);
+  var secondRandom = Math.floor(Math.random() * allProducts.length);
+  var thirdRandom = Math.floor(Math.random() * allProducts.length);
 
+  //grab a random image from the array; access it at the index 'randomFirst' on the array.
   firstImg.src = allProducts[firstRandom].imgPath;
+  secondImg.src = allProducts[secondRandom].imgPath;
+  thirdImg.src = allProducts[thirdRandom].imgPath;
+
+  //everytime a random image is called 'totaClicks' increments
+  totalClicks++;
+  console.log(totalClicks);
+  //add an if statement to stop running at 25 clicks. stop the event listener from functioning
+  if (totalClicks === 25) {
+    firstImg.removeEventListener('click', randomImage);
+    secondImg.removeEventListener('click', randomImage);
+    thirdImg.removeEventListener('click', randomImage);
+  }
 };
 randomImage();
-//grab a random image from the array; access it at the index 'randomFirst' on the array.
+// add event listeners to receive the value of the callback function 
+firstImg.addEventListener('click', randomImage);
+secondImg.addEventListener('click', randomImage);
+thirdImg.addEventListener('click', randomImage);
