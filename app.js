@@ -1,4 +1,11 @@
 'use strict';
+//Place  images in an global array
+
+
+//the function is called to display the random image
+
+
+//Place a script segment where you wish the random image to appear in your layout
 
 function Product(name, src) {
 
@@ -26,8 +33,3 @@ var tracker = {
 
   },
 };
-
-
-(function createProducts() {
-
-})()
