@@ -1,5 +1,7 @@
 'use strict';
-// use global variables
+//Ray and I worked together on this code.
+// use global variables:
+var results = document.getElementById('results');//declare the variable results to find results in html
 var totalClicks = 0;
 
 var firstImg = document.getElementById('first');
@@ -10,7 +12,7 @@ var thirdImg = document.getElementById('third');
 //instantiate new objects:
 var allProducts = [];
 function Product(name, imgPath, altText) {
-  //mage a property on the constructor function(product):
+  //image a property on the constructor function(product):
 
   this.name = name;
   this.imgPath = imgPath;
@@ -52,10 +54,24 @@ function randomImage() {
     firstImg.removeEventListener('click', randomImage);
     secondImg.removeEventListener('click', randomImage);
     thirdImg.removeEventListener('click', randomImage);
+    displayResults();
   }
 };
+
 randomImage();
+//generate a string for every object
+function displayResults() {
+  //use a for loop to iterate through the array
+  for (var i = 0; i < allProducts.length; i++) {//start at 0. is 0 < 20. if yes increment it by 1 
+    var listEl = document.createElement('li');
+    listEl.textContent = allProducts[i].votes + ' votes for the ' + allProducts[i].name + ' and ' + allProducts[i].views + ' views ';
+    results.appendChild(listEl);
+
+  }
+}
+
 // add event listeners to receive the value of the callback function 
 firstImg.addEventListener('click', randomImage);
 secondImg.addEventListener('click', randomImage);
 thirdImg.addEventListener('click', randomImage);
+
