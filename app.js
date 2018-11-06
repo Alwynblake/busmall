@@ -1,5 +1,5 @@
 'use strict';
-//Ray Johnson and I worked together on this code together.
+//Ray Johnson and I worked together on this code together with a tutor.
 // use global variables:
 var results = document.getElementById('results');//declare the variable results to find results in html
 var totalClicks = 0;
@@ -33,6 +33,15 @@ new Product('cthulhu', './assets/cthulhu.jpg');
 new Product('dog-duck', './assets/dog-duck.jpg');
 new Product('dragon', './assets/dragon.jpg');
 new Product('pen', './assets/pen.jpg');
+new Product('pet-sweep', './assets/pet-sweep.jpg');
+new Product('scissors', './assets/scissors.jpg');
+new Product('shark', './assets/shark.jpg');
+new Product('sweep', './assets/sweep.png');
+new Product('tauntaun', './assets/tauntaun.jpg');
+new Product('unicorn', './assets/unicorn.jpg');
+new Product('usb', './assets/usb.gif');
+new Product('water-can', './assets/water-can.jpg');
+new Product('wine-glass', './assets/wine-glass.jpg');
 console.log(allProducts);
 
 //create a random image function
@@ -57,7 +66,6 @@ function randomImage() {
     displayResults();
   }
 };
-
 randomImage();
 //generate a string for every object
 function displayResults() {
@@ -66,10 +74,8 @@ function displayResults() {
     var listEl = document.createElement('li');
     listEl.textContent = allProducts[i].votes + ' votes for the ' + allProducts[i].name + ' and ' + allProducts[i].views + ' views ';
     results.appendChild(listEl);
-
   }
 }
-
 // add event listeners to receive the value of the callback function 
 firstImg.addEventListener('click', randomImage);
 secondImg.addEventListener('click', randomImage);
