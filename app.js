@@ -48,11 +48,11 @@ console.log(allProducts);
 function randomImage() {
   var firstRandom = Math.floor(Math.random() * allProducts.length);
   var secondRandom = Math.floor(Math.random() * allProducts.length);
-  if (secondRandom === firstRandom) {
+  while (secondRandom === firstRandom) {
     secondRandom = Math.floor(Math.random() * allProducts.length);
   }
   var thirdRandom = Math.floor(Math.random() * allProducts.length);
-  if (thirdRandom === secondRandom || thirdRandom === firstRandom) {
+  while (thirdRandom === secondRandom || thirdRandom === firstRandom) {
     thirdRandom = Math.floor(Math.random() * allProducts.length);
   }
   //grab a random image from the array; access it at the index 'firstRandom' on the array:
