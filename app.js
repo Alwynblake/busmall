@@ -58,7 +58,6 @@ var chartConfig = {
   }
 };
 
-
 var myChart = new Chart(ctx, chartConfig);
 
 colorsEl.addEventListener('click', function (event) {
@@ -67,6 +66,7 @@ colorsEl.addEventListener('click', function (event) {
   // use the id to get the index location for what data point to increment in data
 
   var pId = event.target.id;
+
   var idx = colors.indexOf(pId);
 
   if (idx !== -1) {
@@ -74,8 +74,8 @@ colorsEl.addEventListener('click', function (event) {
     console.log(myChart.data.datasets[0].data);
     myChart.update();
   }
-})
-
+});
+console.log(colorsEl);
 
 //use global variables:
 var totalClicks = 0; //this var tracks how many times someone clicks the images
@@ -129,13 +129,13 @@ function randomImage() {
 
   //generate a new image if there is duplication and use an array method to iterate through the last shown images.
   //if any of the conditions in the while loop are true then reassign the values until there isn't a duplicate.
-  //name the array; attach the methods; then invoke it against the value you want to check inside the array: 
+  //name the array (allProducts); attach the methods (with a while loop); then invoke it against the value you want to check inside the array: 
   while (firstRandom === secondRandom || firstRandom === thirdRandom || secondRandom === thirdRandom || lastShownImages.includes(firstRandom) || lastShownImages.includes(secondRandom) || lastShownImages.includes(thirdRandom)) {
     firstRandom = Math.floor(Math.random() * allProducts.length);
     secondRandom = Math.floor(Math.random() * allProducts.length);
     thirdRandom = Math.floor(Math.random() * allProducts.length);
   }
-  //When the while loop stops running then update the array after identifying that the image is unique/unduplicated:
+  //once the while loop stops running update the array after identifying that the image is unique/unduplicated:
   lastShownImages[0] = firstRandom;
   lastShownImages[1] = secondRandom;
   lastShownImages[2] = thirdRandom;
