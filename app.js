@@ -90,6 +90,7 @@ function randomImage() {
   //everytime a random image is called 'totaClicks' increments
   totalClicks++;
   console.log(totalClicks);
+
   //add an if statement to stop running at 25 clicks (stop the event listener from functioning).
   if (totalClicks === 25) {
     firstImg.removeEventListener('click', handleImageClick);
