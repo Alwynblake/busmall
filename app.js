@@ -44,7 +44,6 @@ new Product('usb', './assets/usb.gif');
 new Product('water-can', './assets/water-can.jpg');
 new Product('wine-glass', './assets/wine-glass.jpg');
 console.log(allProducts);
-
 //create a random image function
 function randomImage() {
   var firstRandom = Math.floor(Math.random() * allProducts.length);
@@ -71,29 +70,6 @@ function randomImage() {
     displayResults();
   }
 };
-// //create a random image function
-// function randomImage() {
-//   var firstRandom = Math.floor(Math.random() * allProducts.length);
-//   var secondRandom = Math.floor(Math.random() * allProducts.length);
-//   var thirdRandom = Math.floor(Math.random() * allProducts.length);
-
-//   //set a file path to the source attribute of that element. 
-//   //Grab a random image from the array; access it at the index 'firstRandom' on the array:
-//   firstImg.src = allProducts[firstRandom].imgPath;
-//   secondImg.src = allProducts[secondRandom].imgPath;
-//   thirdImg.src = allProducts[thirdRandom].imgPath;
-
-//   //everytime a random image is called 'totaClicks' increments
-//   totalClicks++;
-//   console.log(totalClicks);
-//   //add an if statement to stop running at 25 clicks (stop the event listener from functioning).
-//   if (totalClicks === 25) {
-//     firstImg.removeEventListener('click', randomImage);
-//     secondImg.removeEventListener('click', randomImage);
-//     thirdImg.removeEventListener('click', randomImage);
-//     displayResults();
-//   }
-// }
 randomImage();
 //generate a string for every object
 function displayResults() {
@@ -108,4 +84,3 @@ function displayResults() {
 firstImg.addEventListener('click', randomImage);
 secondImg.addEventListener('click', randomImage);
 thirdImg.addEventListener('click', randomImage);
-
