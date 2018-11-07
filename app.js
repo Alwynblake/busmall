@@ -17,10 +17,7 @@ for (var i = 0; i < colors.length; i++) {
 
   colorsEl.appendChild(pEl);
 }
-
-
 var ctx = document.getElementById("myChart").getContext('2d');
-
 var chartConfig = {
   type: 'bar',
   data: {
@@ -57,7 +54,6 @@ var chartConfig = {
     }
   }
 };
-
 var myChart = new Chart(ctx, chartConfig);
 
 colorsEl.addEventListener('click', function (event) {
