@@ -1,79 +1,7 @@
 'use strict';
 
-// Array for collecting all of the colors
-var colors = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"];
-
-// HTMLElement 'hook' to the document
-var colorsEl = document.getElementById('colors-container');
-
-// Loop for the length of colors
-// Create a p tag, give it content, and append it to the DOM
-for (var i = 0; i < colors.length; i++) {
-  var pEl = document.createElement('p');
-  pEl.textContent = colors[i];
-
-  pEl.style.color = colors[i];
-  pEl.id = colors[i];
-
-  colorsEl.appendChild(pEl);
-}
-var ctx = document.getElementById("myChart").getContext('2d');
-var chartConfig = {
-  type: 'bar',
-  data: {
-    labels: colors,
-    datasets: [{
-      label: '# of Votes',
-      data: new Array(colors.length).fill(0),
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
-      ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
-      ],
-      borderWidth: 1
-    }]
-  },
-  options: {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
-  }
-};
-var myChart = new Chart(ctx, chartConfig);
-
-colorsEl.addEventListener('click', function (event) {
-  // validate the target as a p tag
-  // get the id of the target p tag
-  // use the id to get the index location for what data point to increment in data
-
-  var pId = event.target.id;
-
-  var idx = colors.indexOf(pId);
-
-  if (idx !== -1) {
-    myChart.data.datasets[0].data[idx] += 1;
-    console.log(myChart.data.datasets[0].data);
-    myChart.update();
-  }
-});
-console.log(colorsEl);
-
 //use global variables:
+var ctx = document.getElementById("myChart").getContext('2d');
 var totalClicks = 0; //this var tracks how many times someone clicks the images
 var firstImg = document.getElementById('first');
 var secondImg = document.getElementById('second');
@@ -91,6 +19,12 @@ function Product(name, imgPath) {
   this.imgPath = imgPath;
   this.views = 0; //the other properties havent been seen. set them to 0
   this.votes = 0; //everytime you click on an object increase this value
+
+  var cOne = Math.floor(Math.random() * 255);
+  var cTwo = Math.floor(Math.random() * 255);
+  var cThree = Math.floor(Math.random() * 255);
+
+  this.bgColor = `rgba(${cOne}, ${cTwo}, ${cThree}, 0.2)`;
   allProducts.push(this); //push this whenever the object is instantiated (into the allProducts arrary)
 }
 //we need a "blueprint" for creating many objects of the same "type".
@@ -125,7 +59,7 @@ function randomImage() {
 
   //generate a new image if there is duplication and use an array method to iterate through the last shown images.
   //if any of the conditions in the while loop are true then reassign the values until there isn't a duplicate.
-  //name the array (allProducts); attach the methods (with a while loop); then invoke it against the value you want to check inside the array: 
+  //name the array (allProducts); attach the methods (with a while loop); then invoke it against the value you want to check inside the array:
   while (firstRandom === secondRandom || firstRandom === thirdRandom || secondRandom === thirdRandom || lastShownImages.includes(firstRandom) || lastShownImages.includes(secondRandom) || lastShownImages.includes(thirdRandom)) {
     firstRandom = Math.floor(Math.random() * allProducts.length);
     secondRandom = Math.floor(Math.random() * allProducts.length);
@@ -157,7 +91,7 @@ function randomImage() {
   totalClicks++;
   console.log(totalClicks);
   //add an if statement to stop running at 25 clicks (stop the event listener from functioning).
-  if (totalClicks === 25) {
+  if (totalClicks > 5) {
     firstImg.removeEventListener('click', handleImageClick);
     secondImg.removeEventListener('click', handleImageClick);
     thirdImg.removeEventListener('click', handleImageClick);
@@ -167,27 +101,57 @@ function randomImage() {
 //pass an event to the function so that you can access the properties of the event.
 function handleImageClick(event) {
   console.log(event.target.alt);
-  //in order to get a random image which allows new photos to be displayed call randomImage Function
-  randomImage();
-
   //iterate through array to check that event has been clicked
   for (var i = 0; i < allProducts.length; i++) {
     if (event.target.alt === allProducts[i].name) {
       allProducts[i].votes++;
     }
   }
+  //in order to get a random image which allows new photos to be displayed call randomImage Function
+  randomImage();
 }
 randomImage();
 //generate a string for every object
 function displayResults() {
-  //use a for loop to iterate through the array:
-  for (var i = 0; i < allProducts.length; i++) { //start at 0. is 0 < 20? if yes, increment it by 1 
-    var listEl = document.createElement('li');
-    listEl.textContent = allProducts[i].votes + ' votes for the ' + allProducts[i].name + ' and ' + allProducts[i].views + ' views ';
-    results.appendChild(listEl);
+  var names = [];
+  for (var i = 0; i < allProducts.length; i++) {
+    names.push(allProducts[i].name);
   }
+
+  var votes = [];
+  for (var j = 0; j < allProducts.length; j++) {
+    votes.push(allProducts[j].votes);
+  }
+
+  var colors = [];
+  for (var k = 0; k < allProducts.length; k++) {
+    colors.push(allProducts[k].bgColor);
+  }
+
+  var chartConfig = {
+    type: 'bar',
+    data: {
+      labels: names,
+      datasets: [{
+        label: '# of Votes',
+        data: votes,
+        backgroundColor: colors,
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  };
+
+  return new Chart(ctx, chartConfig);
 }
-//add event listeners to receive the value of the callback function 
+//add event listeners to receive the value of the callback function
 firstImg.addEventListener('click', handleImageClick);
 secondImg.addEventListener('click', handleImageClick);
 thirdImg.addEventListener('click', handleImageClick);
