@@ -91,7 +91,7 @@ function randomImage() {
   totalClicks++;
   console.log(totalClicks);
   //add an if statement to stop running at 25 clicks (stop the event listener from functioning).
-  if (totalClicks > 5) {
+  if (totalClicks === 25) {
     firstImg.removeEventListener('click', handleImageClick);
     secondImg.removeEventListener('click', handleImageClick);
     thirdImg.removeEventListener('click', handleImageClick);
