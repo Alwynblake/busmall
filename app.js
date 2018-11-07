@@ -75,7 +75,7 @@ console.log(colorsEl);
 
 //use global variables:
 var totalClicks = 0; //this var tracks how many times someone clicks the images
-var firstImg = document.getElementById('first');
+var firstImg = document.getElementById('first');//declare the var firstImg to act as a placeholder 
 var secondImg = document.getElementById('second');
 var thirdImg = document.getElementById('third');
 var results = document.getElementById('results'); //declare the variable results to find results in html
