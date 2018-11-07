@@ -6,6 +6,7 @@ var firstImg = document.getElementById('first');
 var secondImg = document.getElementById('second');
 var thirdImg = document.getElementById('third');
 var results = document.getElementById('results'); //declare the variable results to find results in html
+var lastShownImages = [];//keep track of images displayed
 
 //set the foundation to enable a constructor to setup an object for every image downloaded
 var allProducts = [];
@@ -44,21 +45,35 @@ new Product('usb', './assets/usb.gif');
 new Product('water-can', './assets/water-can.jpg');
 new Product('wine-glass', './assets/wine-glass.jpg');
 console.log(allProducts);
-//create a random image function
+//create a random image function:
 function randomImage() {
   var firstRandom = Math.floor(Math.random() * allProducts.length);
   var secondRandom = Math.floor(Math.random() * allProducts.length);
-  while (secondRandom === firstRandom) {
-    secondRandom = Math.floor(Math.random() * allProducts.length);
-  }
   var thirdRandom = Math.floor(Math.random() * allProducts.length);
-  while (thirdRandom === secondRandom || thirdRandom === firstRandom) {
+
+  //generate a new image if there is duplication and use an array method to iterate through the last shown images.
+  //if any of the conditions in the while loop are true then reassign the values until there isn't a duplicate.
+  //name the array; attach the methods; then invoke it against the value you want to check inside the array: 
+  while (firstRandom === secondRandom || firstRandom === thirdRandom || secondRandom === thirdRandom || lastShownImages.includes(firstRandom) || lastShownImages.includes(secondRandom) || lastShownImages.includes(thirdRandom)) {
+    firstRandom = Math.floor(Math.random() * allProducts.length);
+    secondRandom = Math.floor(Math.random() * allProducts.length);
     thirdRandom = Math.floor(Math.random() * allProducts.length);
   }
-  //grab a random image from the array; access it at the index 'firstRandom' on the array:
+  //When the while loop stops running then update the array after identifying that the image is unique:
+  lastShownImages[0] = firstRandom;
+  lastShownImages[1] = secondRandom;
+  lastShownImages[2] = thirdRandom;
+
+  console.log(lastShownImages);
+
   firstImg.src = allProducts[firstRandom].imgPath;
   secondImg.src = allProducts[secondRandom].imgPath;
   thirdImg.src = allProducts[thirdRandom].imgPath;
+  //update the view count after the user is shown a photo and increment it by 1
+  allProducts[firstRandom].views++;
+  allProducts[secondRandom].views++;
+  allProducts[thirdRandom].views++;
+
   //everytime a random image is called 'totaClicks' increments
   totalClicks++;
   console.log(totalClicks);
@@ -69,7 +84,7 @@ function randomImage() {
     thirdImg.removeEventListener('click', randomImage);
     displayResults();
   }
-};
+}
 randomImage();
 //generate a string for every object
 function displayResults() {
@@ -79,7 +94,7 @@ function displayResults() {
     listEl.textContent = allProducts[i].votes + ' votes for the ' + allProducts[i].name + ' and ' + allProducts[i].views + ' views ';
     results.appendChild(listEl);
   }
-};
+}
 //add event listeners to receive the value of the callback function 
 firstImg.addEventListener('click', randomImage);
 secondImg.addEventListener('click', randomImage);
