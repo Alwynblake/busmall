@@ -3,10 +3,10 @@
 //use global variables:
 var ctx = document.getElementById("myChart").getContext('2d');
 var totalClicks = 0; //this var tracks how many times someone clicks the images
-var firstImg = document.getElementById('first');//declare the var firstImg to act as a placeholder 
+var firstImg = document.getElementById('first');
 var secondImg = document.getElementById('second');
 var thirdImg = document.getElementById('third');
-var results = document.getElementById('results'); //declare the variable results to find results in html
+// var results = document.getElementById('results'); //declare the variable results to find results in html
 var lastShownImages = [];//keeps track of images displayed
 
 //set the foundation to enable a constructor to setup an object for every image downloaded
@@ -90,7 +90,6 @@ function randomImage() {
   //everytime a random image is called 'totaClicks' increments
   totalClicks++;
   console.log(totalClicks);
-
   //add an if statement to stop running at 25 clicks (stop the event listener from functioning).
   if (totalClicks === 25) {
     firstImg.removeEventListener('click', handleImageClick);
@@ -156,3 +155,34 @@ function displayResults() {
 firstImg.addEventListener('click', handleImageClick);
 secondImg.addEventListener('click', handleImageClick);
 thirdImg.addEventListener('click', handleImageClick);
+////
+
+var myChart = new Chart(ctx, chartConfig);
+
+if (localStorage.getItem('voteData')) {
+  var votes = localStorage.getItem('voteData');
+  myChart.data.datasets[0].data = JSON.parse(votes);
+
+
+  // myChart.data.datasets[0].data = JSON.parse(localStorage.getItem('voteData'));
+
+  myChart.update();
+}
+//line79:
+colorsEl.addEventListener('click', function (event) {
+  // validate the target as a p tag
+  // get the id of the target p tag
+  // use the id to get the index location for what data point to increment in data
+
+  var pId = event.target.id;
+  var idx = colors.indexOf(pId);
+
+  if (idx !== -1) {
+    myChart.data.datasets[0].data[idx] += 1;
+    console.log(myChart.data.datasets[0].data);
+    myChart.update();
+
+    var jsonData = JSON.stringify(myChart.data.datasets[0].data);
+    localStorage.setItem('voteData', jsonData);
+  }
+})
