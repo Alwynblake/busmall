@@ -27,30 +27,36 @@ function Product(name, imgPath) {
   this.bgColor = `rgba(${cOne}, ${cTwo}, ${cThree}, 0.2)`;
   allProducts.push(this); //push this whenever the object is instantiated (into the allProducts arrary)
 }
+if (localStorage.productVotes) {
+  allProducts = JSON.parse(localStorage.getItem('productVotes'));// look for the key 'productVote' in local storage. 
+  //If something is there then take that data and set it into the allProducts array
+} else {
+  new Product('bag', './assets/bag.jpg');
+  new Product('banana', './assets/banana.jpg');
+  new Product('bathroom', './assets/bathroom.jpg');
+  new Product('boots', './assets/boots.jpg');
+  new Product('breakfast', './assets/breakfast.jpg');
+  new Product('bubblegum', './assets/bubblegum.jpg');
+  new Product('chair', './assets/chair.jpg');
+  new Product('cthulhu', './assets/cthulhu.jpg');
+  new Product('dog-duck', './assets/dog-duck.jpg');
+  new Product('dragon', './assets/dragon.jpg');
+  new Product('pen', './assets/pen.jpg');
+  new Product('pet-sweep', './assets/pet-sweep.jpg');
+  new Product('scissors', './assets/scissors.jpg');
+  new Product('shark', './assets/shark.jpg');
+  new Product('sweep', './assets/sweep.png');
+  new Product('tauntaun', './assets/tauntaun.jpg');
+  new Product('unicorn', './assets/unicorn.jpg');
+  new Product('usb', './assets/usb.gif');
+  new Product('water-can', './assets/water-can.jpg');
+  new Product('wine-glass', './assets/wine-glass.jpg');
+}
+
 //we need a "blueprint" for creating many objects of the same "type".
 //new Product instantiates (to represent or be an example of something) a new object
 //The way to create an "object type", is to use an object constructor function:
-new Product('bag', './assets/bag.jpg');
-new Product('banana', './assets/banana.jpg');
-new Product('bathroom', './assets/bathroom.jpg');
-new Product('boots', './assets/boots.jpg');
-new Product('breakfast', './assets/breakfast.jpg');
-new Product('bubblegum', './assets/bubblegum.jpg');
-new Product('chair', './assets/chair.jpg');
-new Product('cthulhu', './assets/cthulhu.jpg');
-new Product('dog-duck', './assets/dog-duck.jpg');
-new Product('dragon', './assets/dragon.jpg');
-new Product('pen', './assets/pen.jpg');
-new Product('pet-sweep', './assets/pet-sweep.jpg');
-new Product('scissors', './assets/scissors.jpg');
-new Product('shark', './assets/shark.jpg');
-new Product('sweep', './assets/sweep.png');
-new Product('tauntaun', './assets/tauntaun.jpg');
-new Product('unicorn', './assets/unicorn.jpg');
-new Product('usb', './assets/usb.gif');
-new Product('water-can', './assets/water-can.jpg');
-new Product('wine-glass', './assets/wine-glass.jpg');
-console.log(allProducts);
+// console.log(allProducts);
 //create a random image function:
 function randomImage() {
   var firstRandom = Math.floor(Math.random() * allProducts.length);
@@ -70,8 +76,6 @@ function randomImage() {
   lastShownImages[1] = secondRandom;
   lastShownImages[2] = thirdRandom;
 
-  console.log(lastShownImages);
-
   firstImg.src = allProducts[firstRandom].imgPath;
   secondImg.src = allProducts[secondRandom].imgPath;
   thirdImg.src = allProducts[thirdRandom].imgPath;
@@ -80,7 +84,6 @@ function randomImage() {
   firstImg.alt = allProducts[firstRandom].name;
   secondImg.alt = allProducts[secondRandom].name;
   thirdImg.alt = allProducts[thirdRandom].name;
-  console.log(firstImg);
 
   //update the view count after the user is shown a photo and increment it by 1
   allProducts[firstRandom].views++;
@@ -89,18 +92,18 @@ function randomImage() {
 
   //everytime a random image is called 'totaClicks' increments
   totalClicks++;
-  console.log(totalClicks);
   //add an if statement to stop running at 25 clicks (stop the event listener from functioning).
   if (totalClicks === 25) {
     firstImg.removeEventListener('click', handleImageClick);
     secondImg.removeEventListener('click', handleImageClick);
     thirdImg.removeEventListener('click', handleImageClick);
     displayResults(); //call the function displayResults below
+    localStorage.setItem('productVotes', JSON.stringify(allProducts)); //if there is a truthy value on the key in empty storage
   }
+
 }
 //pass an event to the function so that you can access the properties of the event.
 function handleImageClick(event) {
-  console.log(event.target.alt);
   //iterate through array to check that event has been clicked
   for (var i = 0; i < allProducts.length; i++) {
     if (event.target.alt === allProducts[i].name) {
@@ -155,34 +158,10 @@ function displayResults() {
 firstImg.addEventListener('click', handleImageClick);
 secondImg.addEventListener('click', handleImageClick);
 thirdImg.addEventListener('click', handleImageClick);
-////
-
-var myChart = new Chart(ctx, chartConfig);
-
-if (localStorage.getItem('voteData')) {
-  var votes = localStorage.getItem('voteData');
-  myChart.data.datasets[0].data = JSON.parse(votes);
 
 
-  // myChart.data.datasets[0].data = JSON.parse(localStorage.getItem('voteData'));
 
-  myChart.update();
-}
-//line79:
-colorsEl.addEventListener('click', function (event) {
-  // validate the target as a p tag
-  // get the id of the target p tag
-  // use the id to get the index location for what data point to increment in data
 
-  var pId = event.target.id;
-  var idx = colors.indexOf(pId);
 
-  if (idx !== -1) {
-    myChart.data.datasets[0].data[idx] += 1;
-    console.log(myChart.data.datasets[0].data);
-    myChart.update();
 
-    var jsonData = JSON.stringify(myChart.data.datasets[0].data);
-    localStorage.setItem('voteData', jsonData);
-  }
-})
+
