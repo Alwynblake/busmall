@@ -1,8 +1,9 @@
 'use strict';
-//Ray Johnson and I worked together on this code with a tutor.
+
 //use global variables:
+var ctx = document.getElementById("myChart").getContext('2d');
 var totalClicks = 0; //this var tracks how many times someone clicks the images
-var firstImg = document.getElementById('first');
+var firstImg = document.getElementById('first');//declare the var firstImg to act as a placeholder 
 var secondImg = document.getElementById('second');
 var thirdImg = document.getElementById('third');
 var results = document.getElementById('results'); //declare the variable results to find results in html
@@ -18,6 +19,12 @@ function Product(name, imgPath) {
   this.imgPath = imgPath;
   this.views = 0; //the other properties havent been seen. set them to 0
   this.votes = 0; //everytime you click on an object increase this value
+
+  var cOne = Math.floor(Math.random() * 255);
+  var cTwo = Math.floor(Math.random() * 255);
+  var cThree = Math.floor(Math.random() * 255);
+
+  this.bgColor = `rgba(${cOne}, ${cTwo}, ${cThree}, 0.2)`;
   allProducts.push(this); //push this whenever the object is instantiated (into the allProducts arrary)
 }
 //we need a "blueprint" for creating many objects of the same "type".
@@ -52,13 +59,13 @@ function randomImage() {
 
   //generate a new image if there is duplication and use an array method to iterate through the last shown images.
   //if any of the conditions in the while loop are true then reassign the values until there isn't a duplicate.
-  //name the array; attach the methods; then invoke it against the value you want to check inside the array: 
+  //name the array (allProducts); attach the methods (with a while loop); then invoke it against the value you want to check inside the array:
   while (firstRandom === secondRandom || firstRandom === thirdRandom || secondRandom === thirdRandom || lastShownImages.includes(firstRandom) || lastShownImages.includes(secondRandom) || lastShownImages.includes(thirdRandom)) {
     firstRandom = Math.floor(Math.random() * allProducts.length);
     secondRandom = Math.floor(Math.random() * allProducts.length);
     thirdRandom = Math.floor(Math.random() * allProducts.length);
   }
-  //When the while loop stops running then update the array after identifying that the image is unique/unduplicated:
+  //once the while loop stops running update the array after identifying that the image is unique/unduplicated:
   lastShownImages[0] = firstRandom;
   lastShownImages[1] = secondRandom;
   lastShownImages[2] = thirdRandom;
@@ -83,6 +90,7 @@ function randomImage() {
   //everytime a random image is called 'totaClicks' increments
   totalClicks++;
   console.log(totalClicks);
+
   //add an if statement to stop running at 25 clicks (stop the event listener from functioning).
   if (totalClicks === 25) {
     firstImg.removeEventListener('click', handleImageClick);
@@ -94,27 +102,57 @@ function randomImage() {
 //pass an event to the function so that you can access the properties of the event.
 function handleImageClick(event) {
   console.log(event.target.alt);
-  //in order to get a random image which allows new photos to be displayed call randomImage Function
-  randomImage();
-
   //iterate through array to check that event has been clicked
   for (var i = 0; i < allProducts.length; i++) {
     if (event.target.alt === allProducts[i].name) {
       allProducts[i].votes++;
     }
   }
+  //in order to get a random image which allows new photos to be displayed call randomImage Function
+  randomImage();
 }
 randomImage();
 //generate a string for every object
 function displayResults() {
-  //use a for loop to iterate through the array:
-  for (var i = 0; i < allProducts.length; i++) { //start at 0. is 0 < 20? if yes, increment it by 1 
-    var listEl = document.createElement('li');
-    listEl.textContent = allProducts[i].votes + ' votes for the ' + allProducts[i].name + ' and ' + allProducts[i].views + ' views ';
-    results.appendChild(listEl);
+  var names = [];
+  for (var i = 0; i < allProducts.length; i++) {
+    names.push(allProducts[i].name);
   }
+
+  var votes = [];
+  for (var j = 0; j < allProducts.length; j++) {
+    votes.push(allProducts[j].votes);
+  }
+
+  var colors = [];
+  for (var k = 0; k < allProducts.length; k++) {
+    colors.push(allProducts[k].bgColor);
+  }
+
+  var chartConfig = {
+    type: 'bar',
+    data: {
+      labels: names,
+      datasets: [{
+        label: '# of Votes',
+        data: votes,
+        backgroundColor: colors,
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  };
+
+  return new Chart(ctx, chartConfig);
 }
-//add event listeners to receive the value of the callback function 
+//add event listeners to receive the value of the callback function
 firstImg.addEventListener('click', handleImageClick);
 secondImg.addEventListener('click', handleImageClick);
 thirdImg.addEventListener('click', handleImageClick);
