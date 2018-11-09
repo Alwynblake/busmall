@@ -27,8 +27,8 @@ function Product(name, imgPath) {
   this.bgColor = `rgba(${cOne}, ${cTwo}, ${cThree}, 0.2)`;
   allProducts.push(this); //push this whenever the object is instantiated (into the allProducts arrary)
 }
-if (localStorage.productVotes) {
-  allProducts = JSON.parse(localStorage.getItem('productVotes'));// look for the key 'productVote' in local storage. 
+if (localStorage.productVotes) { //Is there a truthy value on the key in empty storage?
+  allProducts = JSON.parse(localStorage.getItem('productVotes'));//look for the key 'productVote' in local storage 
   //If something is there then take that data and set it into the allProducts array
 } else {
   new Product('bag', './assets/bag.jpg');
@@ -55,7 +55,7 @@ if (localStorage.productVotes) {
 
 //we need a "blueprint" for creating many objects of the same "type".
 //new Product instantiates (to represent or be an example of something) a new object
-//The way to create an "object type", is to use an object constructor function:
+//The way to create an "object type" is to use an object constructor function:
 // console.log(allProducts);
 //create a random image function:
 function randomImage() {
@@ -98,7 +98,7 @@ function randomImage() {
     secondImg.removeEventListener('click', handleImageClick);
     thirdImg.removeEventListener('click', handleImageClick);
     displayResults(); //call the function displayResults below
-    localStorage.setItem('productVotes', JSON.stringify(allProducts)); //if there is a truthy value on the key in empty storage
+    localStorage.setItem('productVotes', JSON.stringify(allProducts)); //is there a truthy value on the key ('productVotes') in empty storage?
   }
 
 }

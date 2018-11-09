@@ -1,5 +1,9 @@
+body {
+  background-color: pink;
+}
+
 /* maintain picture aspect ratio */
-img{ height: 250px;
+img { height: 250px;
 width:250px;
 object-fit:contain; 
 }
