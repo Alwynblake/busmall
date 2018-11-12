@@ -103,7 +103,7 @@ function randomImage() {
     localStorage.setItem('productVotes', JSON.stringify(allProducts)); //if there is a truthy value on the key in empty storage
   }
 }
-//call ther function after you click the reset button:
+//call the function after you click the reset button:
 function resetSurvey() {
   location.reload();
 }
