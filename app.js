@@ -1,6 +1,7 @@
 'use strict';
 
 //use global variables:
+var reset = document.getElementById('reset'); //reset
 var ctx = document.getElementById("myChart").getContext('2d');
 var totalClicks = 0; //this var tracks how many times someone clicks the images
 var firstImg = document.getElementById('first');
@@ -97,12 +98,16 @@ function randomImage() {
     firstImg.removeEventListener('click', handleImageClick);
     secondImg.removeEventListener('click', handleImageClick);
     thirdImg.removeEventListener('click', handleImageClick);
+    reset.removeAttribute('hidden');//remove attribute hidden after 25 clicks
     displayResults(); //call the function displayResults below
     localStorage.setItem('productVotes', JSON.stringify(allProducts)); //if there is a truthy value on the key in empty storage
   }
-
 }
-//pass an event to the function so that you can access the properties of the event.
+//call ther function after you click the reset button:
+function resetSurvey() {
+  location.reload();
+}
+//pass an event to the function so that you can access the properties of the event. 
 function handleImageClick(event) {
   //iterate through array to check that event has been clicked
   for (var i = 0; i < allProducts.length; i++) {
@@ -158,8 +163,7 @@ function displayResults() {
 firstImg.addEventListener('click', handleImageClick);
 secondImg.addEventListener('click', handleImageClick);
 thirdImg.addEventListener('click', handleImageClick);
-
-
+reset.addEventListener('click', resetSurvey);//if the button is clicked call resetSurvey function on line 106
 
 
 
